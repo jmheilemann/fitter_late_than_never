@@ -1,0 +1,85 @@
+<!--
+REFERENCES
+*  Title: Bootstrap Progress Bars
+*  Author: W3 Schools
+*  URL: https://www.w3schools.com/bootstrap/bootstrap_progressbars.asp
+
+*  Title: CSS Text
+*  Author: W3 Schools
+*  URL: https://www.w3schools.com/css/css_text.asp
+
+-->
+{% extends 'fitapp/base.html' %}
+
+{% block content%}
+<head>
+    <!-- CSS Text -->
+    <style>
+        /* Center: controls everything above the progress bar*/
+        .center {
+            text-align: center;
+        }
+        /* QuoteBox: Controls the box of quotes*/
+        .quoteBox {
+            margin: auto;
+            width: 75%;
+            border: 3px solid rgb(112, 110, 129);
+            padding: 10px;
+
+            font-family: monospace;
+            font-size: 20;
+            font-weight: bold;
+            color: rgb(49, 88, 216);
+        }
+    </style>
+</head>
+
+<div class="center">
+    <h1>Hello there, {{ user.first_name }}!</h1>
+    <!-- <label for="bar">Current Progress:</label>
+    <progress id="bar" value="{{ user.profile.current }}" max="100"> {{ user.profile.current }}% </progress> Old progress bar without bootstrap-->
+
+    
+
+    <h5>Here you can check out your current XP and level. When you reach 100 XP by submitting logs and earning achievements, you'll level up!</h5>
+
+    <br>
+
+    <h4>You are level: {{ user.profile.level }}</h4>
+
+    <br>
+
+    <h4>Your current progress:</h4>
+</div>
+
+<!-- Bootstrap Progress Bar -->
+<div class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar"
+    aria-valuenow="{{ user.profile.current }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ user.profile.current }}%">
+      {{ user.profile.current }}%
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+<div class="quoteBox">
+    <div class="center">
+        <p>"It's not about how fast or how far you have to go. It's about
+            digging deep and pushing yourself to keep moving forward."
+        </p>
+        <br>
+        <p>"Don't just talk about it. Be about it."</p>
+        <br>
+        <p>"It's not until you get tired that you see how strong you really are."</p>
+        <br>
+        <p>"Motivate the mind and set the body free."</p>
+        <br>
+        <p>"Don't run from the work, feel the work."</p>
+        <br>
+        <p>- Shaun T</p>
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

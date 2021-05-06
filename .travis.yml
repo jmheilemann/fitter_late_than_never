@@ -1,0 +1,28 @@
+language: python
+services: 
+- postgresql
+env: 
+- DATABASE_URL=postgres://postgres:postgres@localhost/fitapp
+python:
+- '3.8'
+before_install: 
+- export DJANGO_SETTINGS_MODULE=baseproject.settings
+install:
+- pip install -r requirements-travis.txt
+before_script: 
+- psql -c "CREATE USER fit_admin WITH PASSWORD 'fitapp';" -U postgres 
+- psql -c 'CREATE DATABASE "fitapp" OWNER fit_admin;' -U postgres 
+- psql -c 'GRANT ALL PRIVILEGES ON DATABASE "fitapp" to fit_admin;' -U postgres
+script:
+- python manage.py makemigrations 
+- python manage.py migrate 
+- python manage.py collectstatic --noinput
+- python manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: qJ/GzIlqFbGexffCfyevrEuvcoQL+Otwk5GcDOk5g5RhGovwPL54W042vhK33++FbpImUynjTtQV/MIghzOeUPFiNmxsfz4fMIn9XVrtbIXzUMZFSbc84fo7rEje+RnsAzr70nkrFBQcymJ8bv63xPPO1L+T/mvs/+NDqXdKsyIjULWkT3/jwAHXf4tEZZ0kcs2Q8/kk/k+1x4ah0SfLkfqkNgvCNYQInbyTABtDf9t8zR8ERkfaXhKAU4pyl89ibhZZHdO7qPuPskeOBzxOddwl8JffqRHDe+ADeFg6YDCMG4wUlZt397ARNeJVBH/G5stH3TNEpMmUuxGCIgbIrLPu4JyXQ9WHzL2Gp7P2HZpGcpHRwzpxJ8At8/1PIxbKyaDXeIzugourjA5y5kTkjo2CNhk2p6yVqKu3g75cryn+ovdob+er1XLV/FhLGLtBpNgMKRZO+gNjF/K4/g18UX6h10VKGpepAQA2SI7mEOk2HVvHjke+3ewSflWccy16yK6fkYtthzi31D83gSjG2RKyRl8RzQw9f541qt9ZR63CpCzsnMSgIK/fpeUAT8KlLgwCtmHp/63kecIYLevqLCrRqJDwVHrUG1PQ5Nwq5N3dVD+JfAoBU8gi2Uzlqttd3ocPtVT98/qhtR+InCKFm1L08B3yCJHrjQYSIUDy8D8=
+  app: project-b-08
+  on:
+    repo: uva-cs3240-s21/project-b-08
+  skip_cleanup: 'true'

@@ -1,0 +1,50 @@
+<!-- REFERENCES
+Title: Bootstrap 4 Tables
+URL: https://www.w3schools.com/bootstrap4/bootstrap_tables.asp
+
+Title: Bootstrap 4 Grid System
+URL: https://www.w3schools.com/bootstrap4/bootstrap_grid_system.asp
+
+-->
+{% extends 'fitapp/base.html' %}
+
+{% block content%}
+<h1 style="text-align: center"> View Logs </h1>
+<h5 style="text-align: center">Here you can view your own logs, share them to Facebook, and delete your logs! You can also view other users' logs and leave comments!</h5>
+<br>
+<div class="row">
+    <div class="col-xl-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Your Logs</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for whatever in my_logs%}
+                <tr>
+                    <td><a href="/fitapp/viewLogs/{{whatever.id}}" class="btn btn-info">{{whatever.owner.user.first_name}}'s {{whatever.date}} {{whatever.area}} Workout</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-2"></div>
+    <div class="col-xl-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">All Logs</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for whatever in logs%}
+                <tr>
+                    <td><a href="/fitapp/viewLogs/{{whatever.id}}" class="btn btn-info">{{whatever.owner.user.first_name}}'s {{whatever.date}} {{whatever.area}} Workout</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table><br><br><br>
+    </div>
+</div>
+{% endblock %}

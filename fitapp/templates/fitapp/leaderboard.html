@@ -1,0 +1,40 @@
+{% extends 'fitapp/base.html' %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_messages %}
+{% block content %}
+<head>
+    <style>
+        .list-group-item {
+            display: list-item;
+        }
+    </style>
+</head>
+<h1 style="text-align: center">Leaderboard</h1>
+<h5 style="text-align: center">See how your current level and XP rank compared to other users!</h5>
+<h5 style="text-align: center">Click on another user's name to see the logs they submitted!</h5>
+<br>
+
+<ol class="list-group list-group-numbered" style="text-align: center">
+{% for u in users %}
+    {% if u.user.username != "b-08-admin2" and u.user.username != "testadmin" %}
+        {% if u.user.username == currusername %}
+            <li class="list-group-item" style="background-color: lightblue;"> <h3 style="font-weight: bold;">{{ u.user.first_name }}</h3>
+            <p style="font-weight: bold;"> Level: {{ u.level }}</p>
+            <p style="font-weight: bold;"> Current XP: {{ u.current }}</p>
+            </li>
+        {% else %}
+            <li class="list-group-item"> <h3><a style="color: black;" href = "/fitapp/userLogs/{{u.id}}">{{ u.user.first_name }}</a></h3>
+            <p> Level: {{ u.level }}</p>
+            <p> Current XP: {{ u.current }}</p>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</ol>
+
+<br>
+<br>
+
+{% endblock %}
